@@ -41,3 +41,8 @@ export type Specialties = {
     id: number, 
     nome: string
 };
+
+export type Student_Hobbies = {
+    estudante_id: number,
+    passatempo_id: number
+}

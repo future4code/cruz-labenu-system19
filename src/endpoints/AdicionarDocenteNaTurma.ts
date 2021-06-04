@@ -9,25 +9,21 @@ export default async function adicionarDocenteNaTurma(
 
     try {
 
-    let {nome, email, data_nasc, turma_id} = req.body;
+    const {nome, turma_id} = req.body;
+    const {id} = req.params;
 
-    if(!nome || !email || !data_nasc) {
-        throw new Error("Campos estão vazios! Por favor, informe os dados corretamente.");
+    if(!nome) {
+        throw new Error("Docente não encontrado!");
     };
 
-    if (!email.includes("@")) {
-        res.statusCode = 406
-        throw new Error('Formato de email inválido');
-     };
-    
-    let incrementID = 6;
-    turma_id = incrementID++;
-
-    const docentes: Teacher[]= await connection("teacher")
-    .insert({nome, email, data_nasc, turma_id});
+    const docentes: Teacher[]= await connection.raw(`
+        UPDATE class
+        SET turma_id = '${turma_id}'
+        WHERE id = '${id}';
+    `)
 
     res.status(201).send(
-        "Docente criado com sucesso!"
+        "Docente adicionado à turma com sucesso!"
     );
     } catch (err) {
         console.log(err)
