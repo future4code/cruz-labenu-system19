@@ -24,11 +24,6 @@ export default async function criarEstudante(
     const estudantes: Student[]= await connection("student")
     .insert({nome, email, data_nasc, turma_id});
 
-    // const estudantes: Student[]= await connection.raw(`
-    //     INSERT IGNORE INTO class (nome, email, data_nasc)
-    //     VALUES ('${nome}', '${email}', '${data_nasc}');
-    // `);
-
     res.status(201).send(
         "Estudante criado com sucesso!"
     );
