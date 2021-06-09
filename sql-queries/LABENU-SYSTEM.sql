@@ -1,0 +1,59 @@
+-- TABELA TURMA
+CREATE TABLE class(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(50) NOT NULL,
+  data_inicio DATE NOT NULL,
+  data_final DATE NOT NULL,
+  modulo INT NOT NULL
+);
+
+-- TABELA PASSATEMPO
+CREATE TABLE hobbies(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(255) NOT NULL
+);
+
+-- TABELA ESPECIALIDADE
+CREATE TABLE specialties(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nome ENUM ("REACT", "REDUX", "CSS", "TESTES", "TYPESCRIPT", "POO", "BACKEND")
+); 
+
+-- TABELA ESTUDANTES
+CREATE TABLE student (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(50) NOT NULL,
+  email VARCHAR(50) NOT NULL UNIQUE,
+  data_nasc DATE NOT NULL,
+  turma_id INT NOT NULL,
+  FOREIGN KEY (turma_id) REFERENCES class(id)
+);
+
+-- TABELA DOCENTE
+CREATE TABLE teacher(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(50) NOT NULL,
+  email VARCHAR(50) NOT NULL UNIQUE,
+  data_nasc DATE NOT NULL,
+  turma_id INT NOT NULL,
+  FOREIGN KEY (turma_id) REFERENCES class(id)
+);
+
+-- TABELA ESTUDANTE_PASSATEMPO
+CREATE TABLE student_hobbies(
+  estudante_id INT NOT NULL,
+  passatempo_id INT NOT NULL,
+  FOREIGN KEY (estudante_id) REFERENCES student(id),
+  FOREIGN KEY (passatempo_id) REFERENCES hobbies(id)
+);
+
+-- TABLE DOCENTE ESPECIALIDADE
+CREATE TABLE teacher_specialties(
+  docente_id INT NOT NULL,
+  especialidade_id INT NOT NULL,
+  FOREIGN KEY (docente_id) REFERENCES teacher(id),
+  FOREIGN KEY (especialidade_id) REFERENCES specialties(id)
+);
+
+
+
